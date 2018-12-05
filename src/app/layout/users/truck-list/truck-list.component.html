@@ -1,0 +1,145 @@
+<div class="form-group right-main-container">
+  <h5>Pending Trucks List</h5>
+  <!-- <div class="search-filter">
+      <div class="filter-wrapper" >
+          <div class="btn-group" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class="filter-btn dropdown-toggle"
+                      aria-controls="dropdown-basic">
+                Filter <i class="icon icon-filter"></i>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let filter of filterList" (click)="gettrucksList(filter.id,'filter')"><a class="dropdown-item" [class.selected]="filter.id == selectedFilter">{{filter.value}}</a></li>
+              </ul>
+            </div>
+      </div>
+      <div class="search-wrapper">
+          <input type="text" placeholder="Search" [(ngModel)]="searchInput" (keyup)="gettrucksList(searchInput,'search')">
+        </div>
+  </div>
+  <div class="clearfix"></div> -->
+  <div class="table-wrapper">
+      <div class="table-inner-wrapper">
+      <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info" *ngIf="isDataAvailable">
+      <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Type</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Registration Number</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Owner's Name</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 178px;">Address</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 130px;">Registration Date</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 97px;">Tonnage</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Number of Tyres</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Brand</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Model year</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Fitness Certificate Date of expiry</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Tax Token Date of expiry</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Insurance Certificate Date of Expiry</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Route Permit Date of Expiry</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Operations</th>
+          </tr>
+            
+      </thead>
+      <tbody>
+      <tr role="row" [ngClass]="{'even': i%2==0,'odd': i%2!=0}" *ngFor="let truck of trucksList | paginate: { id: 'trucksList', itemsPerPage: 10, currentPage: userPage, totalItems: totalItems };let i=index">
+          <td class="sorting_1">{{truck?.masterTruckTypeName}}</td>
+          <td>{{truck?.truckRegistrationNumber}}</td>
+          <td>{{truck?.truckRegisteredOwnerName}}</td>
+          <td>{{truck?.truckRegisteredOwnerAddress}}</td>
+          <td>{{truck?.truckRegistrationDate | date: 'dd/MM/yyyy'}}</td>
+          <td>{{truck?.masterTruckSizeName}}</td>
+          <td>{{truck?.masterTruckTyreNum}}</td>
+          <td>{{truck?.masterTruckBrandName}}</td>
+          <td>{{truck?.truckModelYear}}</td>
+          <td>{{truck.truckFitnessExpiryDate| date: 'dd/MM/yyyy'}}</td>
+          <td>{{truck.truckTaxTokenExpiryDate| date: 'dd/MM/yyyy'}}</td>
+          <td>{{truck.truckInsuranceExpiryDate| date: 'dd/MM/yyyy'}}</td>
+          <td>{{truck.truckRoutePermitExpiryDate| date: 'dd/MM/yyyy'}}</td>
+          <td>
+            <button class="border-btn" (click)="openModal(template,truck.truckFitnessCertificatePhoto,truck.truckInsurancePhoto,truck.truckRegistrationPhoto,
+            truck.truckRoutePermitPhoto,truck.truckTaxTokenPhoto,truck.userTruckPhoto)" title="View Images"><i class="fa fa-eye"></i></button>
+            <div class="btn-group border-btn" dropdownToggle dropdown placement="bottom right">
+                <span class="active-menu">
+                    Action
+                    <span class="fa down-arrow fa-chevron-right" aria-hidden="true"></span>
+                </span>
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="menuitem">
+                        <a (click)="approveRejectTruck(truck.id,false)"class="dropdown-item" href="javascript:;">
+                            <span class="icon-check-bold"></span> Approve
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a (click)="approveRejectTruck(truck.id,true)" class="dropdown-item" href="javascript:;">Reject</a>
+                    </li>
+                    <li role="menuitem">
+                        <a (click)="deleteTruck(truck.id)" class="dropdown-item" href="javascript:;">Delete</a>
+                    </li>
+                </ul>
+            </div>
+          </td>
+        </tr></tbody>
+    </table>
+    <h4 align="center" *ngIf="!isDataAvailable">No Records Found</h4>
+  </div>
+</div>
+  <pagination-controls id="trucksList" *ngIf="totalItems>10" class="pagination-ctn" (pageChange)="getTruckList($event)"></pagination-controls>   
+</div>
+
+  <!-- Details Modal -->
+  <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">User Detail</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+              <div class="user-detail-wrapper">
+                  <div class="user-detail-list">
+
+                      <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+                      <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Fitness Certificate</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Registration Certificate</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Tax Token</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Insurance Certificate</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Certificate of Route Permit</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 178px;">Truck's Front Image</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 130px;">Truck's Rear Image</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 97px;">Truck's Full Image</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 97px;">Truck's Inner Dashboard</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      <tr role="row">
+                          <td><img class="table-img" [src]="truckFitnessCertPic" alt="Image" (click)="openImageModal(imagetemplate,truckFitnessCertPic)"></td>
+                          <td><img class="table-img" [src]="truckTaxTokenPic" alt="Image" (click)="openImageModal(imagetemplate,truckTaxTokenPic)"></td>
+                          <td><img class="table-img" [src]="truckRoutePermitPic" alt="Image" (click)="openImageModal(imagetemplate,truckRoutePermitPic)"></td>
+                          <td><img class="table-img" [src]="truckRegistrationPic" alt="Image" (click)="openImageModal(imagetemplate,truckRegistrationPic)"></td>
+                          <td><img class="table-img" [src]="truckOwnerPic" alt="image" (click)="openImageModal(imagetemplate,truckOwnerPic)"></td>
+                          <td><img class="table-img" [src]="userTruckImages.truckFrontWithNumberPlate" alt="image" (click)="openImageModal(imagetemplate,userTruckImages.truckFrontWithNumberPlate)"></td>
+                          <td><img class="table-img" [src]="userTruckImages.truckBackWithNumberPlate" alt="image" (click)="openImageModal(imagetemplate,userTruckImages.truckBackWithNumberPlatetruck)"></td>
+                          <td><img class="table-img" [src]="userTruckImages.truckFull" alt="image" (click)="openImageModal(imagetemplate,userTruckImages.truckFull)"></td>
+                          <td><img class="table-img" [src]="userTruckImages.truckInnerDashboard" alt="image" (click)="openImageModal(imagetemplate,userTruckImages.truckInnerDashboard)"></td>
+                        </tr></tbody>
+                    </table>
+                  </div>                    
+                  </div>
+      </div>
+    </ng-template>
+
+<!--Image Modal -->
+<ng-template #imagetemplate>
+<div class="modal-header">
+  <button type="button" class="close pull-right" aria-label="Close" (click)="imagemodalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body image-popup">
+        <div class="col-sm-12">
+                <img [src]="modalImage">
+            </div>
+</div>
+</ng-template>

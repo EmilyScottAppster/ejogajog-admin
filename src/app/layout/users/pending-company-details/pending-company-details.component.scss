@@ -1,0 +1,30 @@
+.table-wrapper{
+    overflow: hidden;
+    .table-inner-wrapper {
+        width: 100%;
+        overflow-x: scroll;
+    }
+   
+}
+.company-name{
+    cursor: pointer; 
+    color: #0275d8;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+.height-modal{
+    .modal-content{
+        min-height: 300px;
+            .image-popup{
+                padding-top: 50px;
+            }
+    }
+}    
+table{
+            tbody{
+                td{
+                    word-break: break-word;
+                }
+            }
+        }

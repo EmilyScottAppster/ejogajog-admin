@@ -1,0 +1,20 @@
+<div class="form-group right-main-container">
+  <h5>Background Image</h5>
+  <div class="row">
+  <div class="col-sm-12">
+  <form #backgroundImageForm="ngForm"  autocomplete="off">
+    <div class="upload-file-box">
+      <div class="upload-file-wrapper">  
+        <!-- <u>{{imgFile?imgFile[0]?.name: 'upload'}}</u> -->
+              <input  type="file" accept=".jpg, .jpeg, .png, .tiff" (change)="saveImgFileFormData($event)" name="zip-file"  class="inputfile" required> 
+        </div>
+       
+      
+    </div>
+
+      <button class="btn bg-btn" type="submit" name="submit" (click)="UploadImages()">Upload</button> 
+  </form>    
+  
+  </div>
+</div>
+</div>

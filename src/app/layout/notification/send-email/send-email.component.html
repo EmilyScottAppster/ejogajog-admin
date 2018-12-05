@@ -1,0 +1,54 @@
+<div class="form-group right-main-container">
+    <h5>Send Email</h5>
+    <div class="search-filter" >
+        <div> 
+            <textarea class="form-control" id="reportText" placeholder="" name="reportText" [(ngModel)]="sendEmail" maxlength="500">
+              </textarea>
+        </div>
+            <div>
+                <button class="btn next-btn col-sm-4" name="" type="submit" id="action-next1" rel="Submit" (click)="sendEmailNotification(sendEmail)">Send Email</button>
+            </div>
+      
+        
+        <div class="filter-wrapper" >
+          
+            <div class="btn-group" dropdown>
+                <button id="button-basic" dropdownToggle type="button" class="filter-btn dropdown-toggle"
+                        aria-controls="dropdown-basic">
+                  Filter <i class="icon icon-filter"></i>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-basic">
+                  <li role="menuitem" *ngFor="let filter of filterList" (click)="getUsersList(filter.id,'filter')"><a class="dropdown-item" [class.selected]="filter.id == selectedType">{{filter.value}}</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="table-wrapper">
+        <div class="table-inner-wrapper">
+        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info" *ngIf="isUserDataAvailable">
+        <thead>
+          <tr role="row">
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Name</th>
+              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Email</th>
+              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Mobile Number</th>
+              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 178px;">Activated</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr role="row" [ngClass]="{'even': i%2==0,'odd': i%2!=0}" *ngFor="let user of usersList | paginate: { id: 'trucksList', itemsPerPage: 10, currentPage: page, totalItems: totalItems };let i=index">
+          <td class="sorting_1">{{user?.nationalIdInfo.name}}</td>
+          <td>{{user?.email}}</td>
+          <td>{{user.mobileNum}}</td>
+          <td >{{user.activated?'Activated':'Deactivated'}}</td>
+          </tr></tbody>
+      </table>
+      <h4 align="center" *ngIf="!isUserDataAvailable">No Records Found</h4>
+    </div>
+  </div>
+    <pagination-controls id="trucksList" *ngIf="totalItems>10" class="pagination-ctn" (pageChange)="getUsersList($event,'paginate')"></pagination-controls>   
+  </div>
+  <div>
+  </div>
+  

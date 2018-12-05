@@ -1,0 +1,74 @@
+<div class="form-group right-main-container">
+  <h5>Pending Trucks List</h5>
+  <!-- <div class="search-filter">
+      <div class="filter-wrapper" >
+          <div class="btn-group" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class="filter-btn dropdown-toggle"
+                      aria-controls="dropdown-basic">
+                Filter <i class="icon icon-filter"></i>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let filter of filterList" (click)="gettrucksList(filter.id,'filter')"><a class="dropdown-item" [class.selected]="filter.id == selectedFilter">{{filter.value}}</a></li>
+              </ul>
+            </div>
+      </div>
+      <div class="search-wrapper">
+          <input type="text" placeholder="Search" [(ngModel)]="searchInput" (keyup)="gettrucksList(searchInput,'search')">
+        </div>
+  </div>
+  <div class="clearfix"></div> -->
+  <div class="table-wrapper">
+      <div class="table-inner-wrapper">
+      <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+      <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Agent Referral Number</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Number of Customers</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">No of Drivers</th>
+            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 178px;">No of Fleet Owners</th>
+          </tr>
+            
+      </thead>
+      <tbody>
+      <tr role="row" [ngClass]="{'even': i%2==0,'odd': i%2!=0}">
+          <td class="sorting_1">{{agentList?.referralCode}}</td>
+         <td class="sorting_1 company-name" (click)="openModal(template,agentList.id,2)">{{agentList?.customersCount}}</td>
+         <td class="sorting_1 company-name" (click)="openModal(template,agentList.id,0)">{{agentList?.driversCount}}</td>
+          <td class="sorting_1 company-name" (click)="openModal(template,agentList.id,1)">{{agentList?.fleetOwnersCount}}</td>
+        </tr></tbody>
+    </table>
+    <!-- <h4 align="center" *ngIf="!isDataAvailable">No Records Found</h4> -->
+  </div>
+</div>
+</div>
+
+  <!-- Details Modal -->
+  <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">User Detail</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+              <div class="user-detail-wrapper">
+                  <div class="user-detail-list">
+
+                      <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info" *ngIf="isDataAvailable">
+                      <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">User Name</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      <tr role="row" [ngClass]="{'even': i%2==0,'odd': i%2!=0}" *ngFor="let agent of agentUsersList | paginate: { id: 'agent', itemsPerPage: 10, currentPage: agentFilterPage, totalItems: totalItems };let i=index">
+                        <td class="sorting_1" >{{agent?.text}}</td>
+                        </tr></tbody>
+                    </table>
+                      <h4 align="center" *ngIf="!isDataAvailable">No Records Found</h4>
+                    <pagination-controls id="agent" *ngIf="totalItems>10" class="pagination-ctn" (pageChange)="getReferredUsers(agentId, filterId, $event)"></pagination-controls>   
+                  </div>                    
+                  </div>
+      </div>
+    </ng-template>

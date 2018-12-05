@@ -1,0 +1,45 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <ul class="list-group">
+           
+        
+        <div class="nested-menu">
+                <a class="list-group-item" (click)="addExpandClass('Users')" [class.router-link-active]="router.isActive('/users', true) || router.isActive('/users/list', true)">
+                    <span><i class="fa fa-user"></i>&nbsp; {{ 'Users' }}</span>
+                </a>
+                <li class="nested" [class.expand]="showMenu === 'Users'">
+                    <ul class="submenu">
+                     
+                        <li>
+                            <a [routerLink]="['/users/list']" [routerLinkActive]="['router-link-active']"><span>{{ 'List' }}</span></a>
+                            <a [routerLink]="['/users/req-reset-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Password Reset Requests' }}</span></a>
+                            <a [routerLink]="['/users/driver-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Drivers List' }}</span></a>
+                            <!-- <a [routerLink]="['/users/pending-drivers-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Drivers List' }}</span></a> -->
+                            <a [routerLink]="['/users/pending-fleet-owners-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Fleet Owners List' }}</span></a>
+                            <a [routerLink]="['/users/pending-customers-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Customers List' }}</span></a>
+                            <a [routerLink]="['/users/pending-agents-list']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Agents List' }}</span></a>
+                            <a [routerLink]="['/users/pending-company-details']" [routerLinkActive]="['router-link-active']"><span>{{ 'Pending Companies List' }}</span></a>
+                            <a [routerLink]="['/users/backgroundImg']" [routerLinkActive]="['router-link-active']"><span>{{'Home Page Background '}}</span></a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <a class="list-group-item" (click)="addExpandClass('Notifications')" [class.router-link-active]="router.isActive('/notification', true) || router.isActive('/notification/sendEmail', true) || router.isActive('/notification/sendSms', true)">
+                    <span><i class="fa fa-user"></i>&nbsp; {{ 'Notifications' }}</span>
+                </a>
+                <li class="nested" [class.expand]="showMenu === 'Notifications'">
+                    <ul class="submenu">
+                     
+                        <li>
+                            <a [routerLink]="['/notification/sendEmail']" [routerLinkActive]="['router-link-active']"><span>{{ 'Send Email' }}</span></a>
+                            <a [routerLink]="['/notification/sendSms']" [routerLinkActive]="['router-link-active']"><span>{{ 'Send Sms' }}</span></a>
+                            
+                           
+                        </li>
+                        
+                    </ul>
+                </li>
+            </div>
+          
+
+    </ul>
+</nav>

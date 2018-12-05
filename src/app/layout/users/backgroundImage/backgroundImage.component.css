@@ -1,0 +1,7 @@
+.table-wrapper{
+    overflow: hidden;
+}
+.table-wrapper .table-inner-wrapper {
+    width: 100%;
+    overflow-y: scroll;
+}

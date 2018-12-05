@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+
+/* custom css for admin section */
+
+body {
+    font-size: 12px;
+}
+
+html, body{
+    height: 100%;
+}
+
+.dropdown-menu {
+    font-size: 12px;
+}
+
+.card-block .table {
+    margin: 0px;
+}
+
+.error {
+    color: red;
+    font-size: 11px;
+    margin: 5px 0;
+}
+
+.form-control {
+    font-size: 13px;
+}
+
+.buttons button {
+    font-size: 13px;
+}
+.ui-select-multiple .btn {
+    background: rgba(239, 76, 35, 0.02)!important;
+    -webkit-appearance: none;
+    color: #333;
+    padding: 5px;
+    height: auto;
+    width: auto;
+    min-width: inherit;
+    font-size: 12px;
+    border-radius: 3px;
+    font-weight: normal;
+    margin: 2px 3px 2px 0 !important;
+    float: left;
+    letter-spacing: 0;
+    border-color: #ef4c23;
+}
+
+ul.ui-select-choices {
+    margin: 0 !important;
+    padding: 0;
+}
+
+ul.ui-select-choices li {
+    border-bottom: 1px solid #ddd;
+}
+
+ul.ui-select-choices li a {
+    padding: 7px 10px !important;
+    font-size: 14px;
+}
+
+.ui-select-multiple .btn a {
+    position: relative;
+    top: 2px;
+    color: #ef4c23;
+    opacity: 1;
+}
+
+.ui-select-multiple .btn a:hover {
+    color: #ef4c23;
+}
+
+.ui-select-multiple .ui-select-match {
+    margin-bottom: 5px;
+}
+
+.ui-select-multiple {
+    height: auto !important;
+}
+
+.ui-select-highlight {
+    font-weight: bold;
+}
+
+.ui-select-offscreen {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+}
+
+.ui-select-choices-row:hover {
+    background-color: #f5f5f5;
+}
+.ui-select-choices.dropdown-menu {
+    display: block;
+    }
+    .glyphicon-remove { position: relative; } .glyphicon-remove:before { content: "\f00d"; font-family: FontAwesome; font-style: normal; font-weight: normal; text-decoration: inherit; color: #000; font-size: 15px; padding-right: 0.5em; position: absolute; top: 0px; left: -5px; }

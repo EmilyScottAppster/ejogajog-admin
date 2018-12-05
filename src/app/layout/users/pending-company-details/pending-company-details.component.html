@@ -1,0 +1,168 @@
+<div class="form-group right-main-container">
+    <h5>Pending Companies List</h5>
+    <!-- <div class="search-filter">
+        <div class="filter-wrapper" >
+            <div class="btn-group" dropdown>
+                <button id="button-basic" dropdownToggle type="button" class="filter-btn dropdown-toggle"
+                        aria-controls="dropdown-basic">
+                  Filter <i class="icon icon-filter"></i>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-basic">
+                  <li role="menuitem" *ngFor="let filter of filterList" (click)="gettrucksList(filter.id,'filter')"><a class="dropdown-item" [class.selected]="filter.id == selectedFilter">{{filter.value}}</a></li>
+                </ul>
+              </div>
+        </div>
+        <div class="search-wrapper">
+            <input type="text" placeholder="Search" [(ngModel)]="searchInput" (keyup)="gettrucksList(searchInput,'search')">
+          </div>
+    </div>
+    <div class="clearfix"></div> -->
+    <div class="row">
+        <div class="col-sm-12">
+        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info" *ngIf="isDataAvailable">
+        <thead>
+          <tr role="row">
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Name of the Company</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Registered Address</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Trade License No.</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">TIN</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">VAT Registration No</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Certificate of Incorporation Number</th>
+              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 153px;">Last Modified At</th>
+              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Operations</th>
+            </tr>
+              
+        </thead>
+        <tbody>
+        <tr role="row" [ngClass]="{'even': i%2==0,'odd': i%2!=0}" *ngFor="let company of companiesList | paginate: { id: 'trucksList', itemsPerPage: 10, currentPage: userPage, totalItems: totalItems };let i=index">
+            <td class="sorting_1 company-name" *ngIf="company?.userCompanyDetailsModel.compDetails.companyName" (click)="openModal(template,company.userCompanyDetailsModel.bankDetails,company.userCompanyDetailsModel.compCertificate,company.userCompanyDetailsModel.gateways)">{{company?.userCompanyDetailsModel.compDetails.companyName}}</td>
+            <td class="sorting_1" *ngIf="!company?.userCompanyDetailsModel.compDetails.companyName">-</td>
+            <td class="sorting_1">{{company?.userCompanyDetailsModel.compDetails?.street1}} {{company?.userCompanyDetailsModel.compDetails?.street2}} {{company?.userCompanyDetailsModel.compDetails?.postOffice}} {{company?.userCompanyDetailsModel.compDetails?.city}} {{company?.userCompanyDetailsModel.compDetails?.district[0]?.text}} {{company?.userCompanyDetailsModel.compDetails?.postalCode}}</td>
+            <td class="sorting_1" *ngIf="company?.userCompanyDetailsModel.compDetails.tradeLicenseNumber">{{company?.userCompanyDetailsModel.compDetails.tradeLicenseNumber}}</td>
+            <td class="sorting_1" *ngIf="!company?.userCompanyDetailsModel.compDetails.tradeLicenseNumber">-</td>
+            <td class="sorting_1" *ngIf="company?.userCompanyDetailsModel.compDetails.tinNumber">{{company?.userCompanyDetailsModel.compDetails.tinNumber}}</td>
+            <td class="sorting_1" *ngIf="!company?.userCompanyDetailsModel.compDetails.tinNumber">-</td>
+            <td class="sorting_1" *ngIf="company?.userCompanyDetailsModel.compDetails.vatRegistrationNumber">{{company?.userCompanyDetailsModel.compDetails.vatRegistrationNumber}}</td>
+            <td class="sorting_1" *ngIf="!company?.userCompanyDetailsModel.compDetails.vatRegistrationNumber">-</td>
+            <td class="sorting_1" *ngIf="company?.userCompanyDetailsModel.compDetails.certificateOfIncorporationNumber">{{company?.userCompanyDetailsModel.compDetails.certificateOfIncorporationNumber}}</td>
+            <td class="sorting_1" *ngIf="!company?.userCompanyDetailsModel.compDetails.certificateOfIncorporationNumber">-</td>
+            <td class="sorting_1" *ngIf="company?.userCompanyDetailsModel.modifiedAt">{{company?.userCompanyDetailsModel.modifiedAt | date: 'medium'}}</td>
+            <td>
+              <div class="btn-group border-btn" dropdownToggle dropdown placement="bottom right">
+                  <span class="active-menu">
+                      Action
+                      <span class="fa down-arrow fa-chevron-right" aria-hidden="true"></span>
+                  </span>
+                  <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                      <li role="menuitem">
+                          <a (click)="approveRejectCompany(company.userIdAndRoleModel.id,false)"class="dropdown-item" href="javascript:;">
+                              <span class="icon-check-bold"></span> Approve
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a (click)="approveRejectCompany(company.userIdAndRoleModel.id,true)" class="dropdown-item" href="javascript:;">Reject</a>
+                      </li>
+                  </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4 align="center" *ngIf="!isDataAvailable">No Records Found</h4>
+    </div>
+  </div>
+    <pagination-controls id="trucksList" *ngIf="totalItems>10" class="pagination-ctn" (pageChange)="getTruckList($event)"></pagination-controls>   
+  </div>
+  
+    <!-- Details Modal -->
+    <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Company Details</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <div class="table-wrapper">
+                    <div class="table-inner-wrapper">
+  
+                        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Article of Association</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;">Memorandum of Understanding</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 130px;">Trade License Number</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 178px;">TIN File</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 130px;">VAT File</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 97px;">Name of the Bank</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Branch of Bank</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Account Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Account Number</th>
+                              <!-- <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Date of resubmission</th> -->
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 150px;">Payment Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row">
+                            <td *ngIf="userCertificates.articleOfAssociationFile"><a target="_blank" href="{{userCertificates.articleOfAssociationFile}}">(Article of Association <i class="fa fa-download"></i>)</a></td>
+                            <td class="sorting_1" *ngIf="!userCertificates.articleOfAssociationFile">-</td>
+                            <td *ngIf="userCertificates.memorandumOfUnderstandingFile"><a target="_blank" href="{{userCertificates.memorandumOfUnderstandingFile}}">(Memorandum of Understanding <i class="fa fa-download"></i>)</a></td>
+                            <td class="sorting_1" *ngIf="!userCertificates.memorandumOfUnderstandingFile">-</td>
+                            <td *ngIf="userCertificates.tradeLicenseFile"><a target="_blank" href="{{userCertificates.tradeLicenseFile}}">(Trade License File <i class="fa fa-download"></i>)</a></td>
+                            <td class="sorting_1" *ngIf="!userCertificates.tradeLicenseFile">-</td>
+                            <td *ngIf="userCertificates.tinFile"><a target="_blank" href="{{userCertificates.tinFile}}">(TIN File <i class="fa fa-download"></i>)</a></td>
+                            <td class="sorting_1" *ngIf="!userCertificates.tinFile">-</td>
+
+                            <td *ngIf="userCertificates.vatRegistrationFile"><a target="_blank" href="{{userCertificates.vatRegistrationFile}}">(VAT File <i class="fa fa-download"></i>)</a></td>
+                            <td class="sorting_1" *ngIf="!userCertificates.vatRegistrationFile">-</td>
+                            <td *ngIf="bankDetailsUser?.accountName">{{bankDetailsUser?.bankName}}</td>
+                            <td class="sorting_1" *ngIf="!bankDetailsUser.accountName">-</td>
+                            <td *ngIf="bankDetailsUser.accountNum">{{bankDetailsUser?.branch}}</td>
+                            <td class="sorting_1" *ngIf="!bankDetailsUser.accountNum">-</td>
+                            <td *ngIf="bankDetailsUser.bankName">{{bankDetailsUser?.accountName}}</td>
+                            <td class="sorting_1" *ngIf="!bankDetailsUser?.bankName">-</td>
+                            <td *ngIf="bankDetailsUser.branch">{{bankDetailsUser?.accountNum}}</td>
+                            <td class="sorting_1" *ngIf="!bankDetailsUser.branch">-</td>
+                            <td>
+                                <button class="border-btn" (click)="openImageModal(imagetemplate)" title="View Details"><i class="fa fa-eye"></i></button>
+                            </td>
+                          </tr></tbody>
+                      </table>
+                    </div>                    
+                    </div>
+        </div>
+      </ng-template>
+  
+  <!--Image Modal -->
+  <ng-template #imagetemplate>
+      <div class="modal-header">
+          <h4 class="modal-title pull-left">Payment Details</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="imagemodalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  <div class="modal-body image-popup">
+          <div class="col-sm-12">
+              <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable no-footer " role="grid" aria-describedby="dataTable_info">
+                  <thead>
+                    <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 192px;" *ngFor="let gateway of userPaymentGateways">
+                         <span *ngIf="gateway.text!== 'Other'">
+                            {{gateway.text}}
+                         </span>
+                         <span *ngIf="gateway.text == 'Other'">
+                            {{gateway.otherName}}
+                         </span>
+                        </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row">
+                      <td *ngFor="let gateway of userPaymentGateways">{{gateway.number}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+  </div>
+  </ng-template>

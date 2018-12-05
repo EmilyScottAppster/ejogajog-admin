@@ -1,0 +1,108 @@
+div.dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+}
+div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+}
+.pagination>li {
+    display: inline;
+}
+.right-main-container {
+    background: #fff;
+    padding: 0 15px;
+    h5 {
+        padding: 36px 0;
+        border-bottom: 1px solid #e6eaee;
+        margin-bottom: 25px;
+    }
+    th {
+        background: #f5f8fb;
+        border: solid 1px #e6eaee;
+        vertical-align: middle;
+    }
+    .border-btn {
+        background-color: #f8fafc;
+        border: solid 1px #ced0da;
+        font-size: 13px;
+        color: #3e3e3f;
+        padding: 7px 10px;
+        :hover {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
+.image-popup {
+    img {
+        width: 100%;
+    }
+}
+.search-filter{
+    margin-bottom: 15px;
+    min-height: 45px;
+    .search-wrapper {
+        float: right;
+        margin-right: 15px;
+        input{
+            border: solid 1px #ced0da;
+            padding: 10px;
+            
+        }
+        input:focus {
+            outline: none;
+            border: solid 1px #ced0da;
+            box-shadow: none;
+        }
+    }
+    .filter-wrapper{
+        float: right;
+        color: #3e3e3f;
+        .dropdown-menu.show {
+            left: auto !important;
+            right: 0 !important;
+            li {
+                a {
+                    cursor: pointer;
+                }
+            }
+        }
+        .filter-btn  {
+            border: solid 1px #1c5d88;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .dropdown-toggle::after {
+            border: 0 !important;
+        }
+        .icon {
+            font-family: 'Ejogajog-font';
+            font-size: 12px;
+            vertical-align: middle;
+            padding-left: 10px;
+        }
+    }
+}
+.clearfix {
+    margin-top: 10px;
+}
+
+.role-image{
+    height: 25px;
+    margin-right: 10px;
+}
+.selected{
+    font-weight: bold;
+}
+
+@media screen and (max-width:767px){
+    .table-wrapper{
+        overflow: hidden;
+        .table-inner-wrapper {
+            width: 100%;
+            overflow-y: scroll;
+        }
+    }
+}
